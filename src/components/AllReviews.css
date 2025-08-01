@@ -1,0 +1,38 @@
+.slick-slide {
+  display: flex;
+  justify-content: center;
+}
+
+
+.slick-slide .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Makes sure all cards take up the same height */
+}
+.slick-list {
+  text-align: center;
+}
+.slick-next {
+  right: 18px !important;
+}
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Decrease scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar color */
+  border-radius: 10px; /* Rounded edges */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+
+
+
