@@ -28,9 +28,12 @@ const AllReviews = () => {
     const fetchReviews = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/api/reviews", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://review-backend-vercel.vercel.app/api/reviews",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -57,14 +60,25 @@ const AllReviews = () => {
       !isValidObjectId(newReview.constructorId) ||
       !isValidObjectId(newReview.projectId)
     ) {
-      alert("Constructor ID and Project ID must be valid 24-character ObjectIds.");
+      alert(
+        "Constructor ID and Project ID must be valid 24-character ObjectIds."
+      );
       return;
     }
     try {
-      const res = await axios.post("http://localhost:3000/api/reviews", newReview, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.post(
+        "https://review-backend-vercel.vercel.app/api/reviews",
+        newReview,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNewReview({
+        constructorId: "",
+        projectId: "",
+        comment: "",
+        rating: 0,
       });
-      setNewReview({ constructorId: "", projectId: "", comment: "", rating: 0 });
       setReviews((prev) => [...prev, res.data.review]);
       setShowModal(false);
       alert("Review submitted successfully!");
@@ -97,7 +111,7 @@ const AllReviews = () => {
                   isBuilder: false,
                   likes: [],
                   dislikes: [],
-                  createdAt: new Date().toISOString()
+                  createdAt: new Date().toISOString(),
                 },
               ],
             }
@@ -111,7 +125,7 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:3000/api/like/${commentId}`,
+        `https://review-backend-vercel.vercel.app/api/like/${commentId}`,
         { commentId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -120,9 +134,13 @@ const AllReviews = () => {
           ...review,
           comments: review.comments.map((comment) =>
             comment._id === commentId
-              ? { ...comment, likes: response.data.review.likes, dislikes: response.data.review.dislikes }
+              ? {
+                  ...comment,
+                  likes: response.data.review.likes,
+                  dislikes: response.data.review.dislikes,
+                }
               : comment
-          )
+          ),
         }))
       );
     } catch (error) {
@@ -134,7 +152,7 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:3000/api/dislike/${commentId}`,
+        `https://review-backend-vercel.vercel.app/api/dislike/${commentId}`,
         { commentId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -143,9 +161,13 @@ const AllReviews = () => {
           ...review,
           comments: review.comments.map((comment) =>
             comment._id === commentId
-              ? { ...comment, likes: response.data.review.likes, dislikes: response.data.review.dislikes }
+              ? {
+                  ...comment,
+                  likes: response.data.review.likes,
+                  dislikes: response.data.review.dislikes,
+                }
               : comment
-          )
+          ),
         }))
       );
     } catch (error) {
@@ -157,14 +179,18 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:3000/api/reviews/${reviewId}/like`,
+        `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/like`,
         { reviewId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReviews((prev) =>
         prev.map((review) =>
           review._id === reviewId
-            ? { ...review, likes: response.data.review.likes, dislikes: response.data.review.dislikes }
+            ? {
+                ...review,
+                likes: response.data.review.likes,
+                dislikes: response.data.review.dislikes,
+              }
             : review
         )
       );
@@ -177,14 +203,18 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:3000/api/reviews/${reviewId}/dislike`,
+        `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/dislike`,
         { reviewId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReviews((prev) =>
         prev.map((review) =>
           review._id === reviewId
-            ? { ...review, likes: response.data.review.likes, dislikes: response.data.review.dislikes }
+            ? {
+                ...review,
+                likes: response.data.review.likes,
+                dislikes: response.data.review.dislikes,
+              }
             : review
         )
       );
@@ -269,12 +299,17 @@ const AllReviews = () => {
                     {builder}
                   </h3>
                   <img
-                    src={review.constructorId?.image || "https://via.placeholder.com/400"}
+                    src={
+                      review.constructorId?.image ||
+                      "https://via.placeholder.com/400"
+                    }
                     alt={builder}
                     className="w-full h-40 object-cover rounded-lg mb-4"
                   />
                   <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-2xl font-bold">{avgRating.toFixed(1)}</span>
+                    <span className="text-2xl font-bold">
+                      {avgRating.toFixed(1)}
+                    </span>
                     <span className="text-yellow-500">⭐</span>
                     <span className="text-gray-600 text-sm">
                       ({group.length} reviews)
@@ -298,12 +333,17 @@ const AllReviews = () => {
                       <p className="text-xs text-gray-500">
                         {new Date(review.createdAt).toLocaleDateString()}
                       </p>
-                      <p className="text-gray-800 text-sm mt-1">{review.comment}</p>
+                      <p className="text-gray-800 text-sm mt-1">
+                        {review.comment}
+                      </p>
                       <p className="text-yellow-600 font-bold">
                         ⭐ {review.rating} / 5
                       </p>
                       <div className="flex justify-between items-center mt-2">
-                        <Link to={`/review/${review._id}`} className="text-blue-500 text-sm">
+                        <Link
+                          to={`/review/${review._id}`}
+                          className="text-blue-500 text-sm"
+                        >
                           Show More
                         </Link>
                         <div className="flex gap-2 items-center">
@@ -319,13 +359,17 @@ const AllReviews = () => {
                             className="text-gray-600 hover:text-red-600 flex items-center"
                           >
                             <ThumbsDown className="w-4 h-4" />
-                            <span className="ml-1">{getDislikeCount(review)}</span>
+                            <span className="ml-1">
+                              {getDislikeCount(review)}
+                            </span>
                           </button>
                           <button
                             onClick={() => toggleReplies(review._id)}
                             className="text-sm"
                           >
-                            {showReplies[review._id] ? "Hide Replies" : "Replies"}
+                            {showReplies[review._id]
+                              ? "Hide Replies"
+                              : "Replies"}
                           </button>
                         </div>
                       </div>
@@ -343,23 +387,33 @@ const AllReviews = () => {
                                   }`}
                                 >
                                   <p className="text-xs text-gray-500">
-                                    {comment.isBuilder ? "👷 Builder" : "🧑 User"}
+                                    {comment.isBuilder
+                                      ? "👷 Builder"
+                                      : "🧑 User"}
                                   </p>
                                   <p className="text-sm">{comment.text}</p>
                                   <div className="flex gap-2 items-center mt-1">
                                     <button
-                                      onClick={() => handleLikeComment(comment._id)}
+                                      onClick={() =>
+                                        handleLikeComment(comment._id)
+                                      }
                                       className="text-gray-600 hover:text-blue-600 flex items-center text-xs"
                                     >
                                       <ThumbsUp className="w-3 h-3" />
-                                      <span className="ml-1">{getLikeCount(comment)}</span>
+                                      <span className="ml-1">
+                                        {getLikeCount(comment)}
+                                      </span>
                                     </button>
                                     <button
-                                      onClick={() => handleDislikeComment(comment._id)}
+                                      onClick={() =>
+                                        handleDislikeComment(comment._id)
+                                      }
                                       className="text-gray-600 hover:text-red-600 flex items-center text-xs"
                                     >
                                       <ThumbsDown className="w-3 h-3" />
-                                      <span className="ml-1">{getDislikeCount(comment)}</span>
+                                      <span className="ml-1">
+                                        {getDislikeCount(comment)}
+                                      </span>
                                     </button>
                                   </div>
                                 </div>
@@ -407,12 +461,17 @@ const AllReviews = () => {
                       {builder}
                     </h3>
                     <img
-                      src={review.constructorId?.image || "https://via.placeholder.com/400"}
+                      src={
+                        review.constructorId?.image ||
+                        "https://via.placeholder.com/400"
+                      }
                       alt={builder}
                       className="w-full h-40 object-cover rounded-lg mb-4"
                     />
                     <div className="flex items-center space-x-2 mb-2">
-                      <span className="text-2xl font-bold">{avgRating.toFixed(1)}</span>
+                      <span className="text-2xl font-bold">
+                        {avgRating.toFixed(1)}
+                      </span>
                       <span className="text-yellow-500">⭐</span>
                       <span className="text-gray-600 text-sm">
                         ({group.length} reviews)
@@ -436,12 +495,17 @@ const AllReviews = () => {
                         <p className="text-xs text-gray-500">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </p>
-                        <p className="text-gray-800 text-sm mt-1">{review.comment}</p>
+                        <p className="text-gray-800 text-sm mt-1">
+                          {review.comment}
+                        </p>
                         <p className="text-yellow-600 font-bold">
                           ⭐ {review.rating} / 5
                         </p>
                         <div className="flex justify-between items-center mt-2">
-                          <Link to={`/review/${review._id}`} className="text-blue-500 text-sm">
+                          <Link
+                            to={`/review/${review._id}`}
+                            className="text-blue-500 text-sm"
+                          >
                             Show More
                           </Link>
                           <div className="flex gap-2 items-center">
@@ -450,20 +514,26 @@ const AllReviews = () => {
                               className="text-gray-600 hover:text-blue-600 flex items-center"
                             >
                               <ThumbsUp className="w-4 h-4" />
-                              <span className="ml-1">{getLikeCount(review)}</span>
+                              <span className="ml-1">
+                                {getLikeCount(review)}
+                              </span>
                             </button>
                             <button
                               onClick={() => handleDislikeReview(review._id)}
                               className="text-gray-600 hover:text-red-600 flex items-center"
                             >
                               <ThumbsDown className="w-4 h-4" />
-                              <span className="ml-1">{getDislikeCount(review)}</span>
+                              <span className="ml-1">
+                                {getDislikeCount(review)}
+                              </span>
                             </button>
                             <button
                               onClick={() => toggleReplies(review._id)}
                               className="text-sm"
                             >
-                              {showReplies[review._id] ? "Hide Replies" : "Replies"}
+                              {showReplies[review._id]
+                                ? "Hide Replies"
+                                : "Replies"}
                             </button>
                           </div>
                         </div>
@@ -481,23 +551,33 @@ const AllReviews = () => {
                                     }`}
                                   >
                                     <p className="text-xs text-gray-500">
-                                      {comment.isBuilder ? "👷 Builder" : "🧑 User"}
+                                      {comment.isBuilder
+                                        ? "👷 Builder"
+                                        : "🧑 User"}
                                     </p>
                                     <p className="text-sm">{comment.text}</p>
                                     <div className="flex gap-2 items-center mt-1">
                                       <button
-                                        onClick={() => handleLikeComment(comment._id)}
+                                        onClick={() =>
+                                          handleLikeComment(comment._id)
+                                        }
                                         className="text-gray-600 hover:text-blue-600 flex items-center text-xs"
                                       >
                                         <ThumbsUp className="w-3 h-3" />
-                                        <span className="ml-1">{getLikeCount(comment)}</span>
+                                        <span className="ml-1">
+                                          {getLikeCount(comment)}
+                                        </span>
                                       </button>
                                       <button
-                                        onClick={() => handleDislikeComment(comment._id)}
+                                        onClick={() =>
+                                          handleDislikeComment(comment._id)
+                                        }
                                         className="text-gray-600 hover:text-red-600 flex items-center text-xs"
                                       >
                                         <ThumbsDown className="w-3 h-3" />
-                                        <span className="ml-1">{getDislikeCount(comment)}</span>
+                                        <span className="ml-1">
+                                          {getDislikeCount(comment)}
+                                        </span>
                                       </button>
                                     </div>
                                   </div>

@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HashLink } from "react-router-hash-link";
 import { motion } from "framer-motion";
-import { Building2, Search, Menu, X, Settings, Eye, EyeOff } from "lucide-react";
+import {
+  Building2,
+  Search,
+  Menu,
+  X,
+  Settings,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -102,7 +110,7 @@ const Header = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://review-backend-vercel.vercel.app/api/auth/login",
         {
           email,
           password,
@@ -136,7 +144,7 @@ const Header = () => {
     console.log("Google response:", credentialResponse);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login/google",
+        "https://review-backend-vercel.vercel.app/api/auth/login/google",
         {
           token: credentialResponse.credential,
         }
@@ -164,7 +172,7 @@ const Header = () => {
   const responseFacebook = async (response) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login/facebook",
+        "https://review-backend-vercel.vercel.app/api/auth/login/facebook",
         {
           accessToken: response.accessToken,
           userID: response.userID,
@@ -201,7 +209,7 @@ const Header = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/customer/send-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/send-otp",
         {
           email: loginMethod === "email" ? email : null,
           phone: loginMethod === "phone" ? phone : null,
@@ -224,7 +232,7 @@ const Header = () => {
     const { otp } = formData;
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/customer/verify-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/verify-otp",
         {
           otp,
           email: loginMethod === "email" ? formData.email : null,
@@ -308,7 +316,11 @@ const Header = () => {
           </motion.div>
           <nav className="hidden lg:flex items-center space-x-8">
             {navigationLinks.map((link, index) => (
-              <motion.div key={index} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span
                   className="text-gray-300 hover:text-white font-medium transition duration-300 cursor-pointer"
                   onClick={() => handleMenuClick(link)}
@@ -365,14 +377,22 @@ const Header = () => {
               onClick={toggleMobileMenu}
               whileTap={{ scale: 0.95 }}
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </motion.button>
           </div>
         </div>
         {isMobileMenuOpen && (
           <div className="lg:hidden flex flex-col items-center space-y-4 mt-4">
             {navigationLinks.map((link, index) => (
-              <motion.div key={index} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span
                   className="text-gray-300 hover:text-white font-medium transition duration-300 cursor-pointer"
                   onClick={() => handleMenuClick(link)}
@@ -417,7 +437,10 @@ const Header = () => {
       </div>
       {showLoginPopup && !isLoggedIn && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div ref={popupRef} className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div
+            ref={popupRef}
+            className="bg-white p-6 rounded-lg shadow-lg w-96"
+          >
             <ToastContainer />
             <div className="flex flex-col justify-center items-center text-center p-4">
               <h2 className="text-green-600 font-bold mb-3">
@@ -431,7 +454,8 @@ const Header = () => {
                 and acknowledge our
                 <a href="#" className="text-blue-500 mx-1">
                   Privacy Policy
-                </a>.
+                </a>
+                .
               </p>
 
               {role === "customer" ? (
@@ -471,7 +495,11 @@ const Header = () => {
                         style={{ cursor: "pointer" }}
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        {showPassword ? (
+                          <EyeOff size={20} />
+                        ) : (
+                          <Eye size={20} />
+                        )}
                       </span>
                     </div>
                     {error && (
@@ -516,7 +544,9 @@ const Header = () => {
                       Phone
                     </button>
                   </div>
-                  {error && <div className="alert alert-danger py-2">{error}</div>}
+                  {error && (
+                    <div className="alert alert-danger py-2">{error}</div>
+                  )}
                   {!otpSent ? (
                     <form onSubmit={handleSendOTP}>
                       <div className="mb-3">

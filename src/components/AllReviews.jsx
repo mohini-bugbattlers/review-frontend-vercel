@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from "react";
 // import { motion } from "framer-motion";
 // import { useInView } from "react-intersection-observer";
@@ -41,7 +39,7 @@
 //     const fetchReviews = async () => {
 //       try {
 //         const token = sessionStorage.getItem("token");
-//         const response = await axios.get("http://localhost:3000/api/reviews", {
+//         const response = await axios.get("https://review-backend-vercel.vercel.app/api/reviews", {
 //           headers: { Authorization: `Bearer ${token}` },
 //         });
 //         setReviews(
@@ -59,7 +57,7 @@
 //     try {
 //       const token = sessionStorage.getItem("token");
 //       const res = await axios.get(
-//         `http://localhost:3000/api/review/${reviewId}/comments`,
+//         `https://review-backend-vercel.vercel.app/api/review/${reviewId}/comments`,
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
 //       setReviews((prev) =>
@@ -80,7 +78,7 @@
 //     try {
 //       const token = sessionStorage.getItem("token");
 //       const response = await axios.post(
-//         `http://localhost:3000/api/review/${reviewId}/comments`,
+//         `https://review-backend-vercel.vercel.app/api/review/${reviewId}/comments`,
 //         { text: commentText, isBuilder },
 //         {
 //           headers: {
@@ -100,7 +98,7 @@
 //     try {
 //       const token = sessionStorage.getItem("token");
 //       const response = await axios.put(
-//         `http://localhost:3000/api/comments/${commentId}`,
+//         `https://review-backend-vercel.vercel.app/api/comments/${commentId}`,
 //         { text: updatedText },
 //         {
 //           headers: {
@@ -119,7 +117,7 @@
 //   const deleteComment = async (commentId, reviewId) => {
 //     try {
 //       const token = sessionStorage.getItem("token");
-//       await axios.delete(`http://localhost:3000/api/comments/${commentId}`, {
+//       await axios.delete(`https://review-backend-vercel.vercel.app/api/comments/${commentId}`, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       setReviews((prev) =>
@@ -145,7 +143,7 @@
 //         return;
 //       }
 //       const res = await axios.post(
-//         `http://localhost:3000/api/reviews/${reviewId}/like`,
+//         `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/like`,
 //         {},
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -176,7 +174,7 @@
 //       return;
 //     }
 //     const res = await axios.post(
-//       `http://localhost:3000/api/reviews/${reviewId}/dislike`,
+//       `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/dislike`,
 //       {},
 //       { headers: { Authorization: `Bearer ${token}` } }
 //     );
@@ -534,7 +532,7 @@
 //                                 className="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
 //                               />
 //                               <div className="flex space-x-2">
-                         
+
 //                                 <button
 //                                   onClick={() =>
 //                                     handleReplySubmitWithRole(review._id, true)
@@ -786,7 +784,7 @@
 //                             className="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
 //                           />
 //                           <div className="flex space-x-2">
-                           
+
 //                             <button
 //                               onClick={() =>
 //                                 handleReplySubmitWithRole(review._id, true)
@@ -811,7 +809,6 @@
 // };
 
 // export default AllReviews;
-
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -856,9 +853,12 @@ const AllReviews = () => {
     const fetchReviews = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/api/reviews", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://review-backend-vercel.vercel.app/api/reviews",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setReviews(
           response.data.filter((review) => review.status === "approved")
         );
@@ -874,7 +874,7 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:3000/api/review/${reviewId}/comments`,
+        `https://review-backend-vercel.vercel.app/api/review/${reviewId}/comments`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReviews((prev) =>
@@ -895,7 +895,7 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:3000/api/review/${reviewId}/comments`,
+        `https://review-backend-vercel.vercel.app/api/review/${reviewId}/comments`,
         { text: commentText, isBuilder },
         {
           headers: {
@@ -915,7 +915,7 @@ const AllReviews = () => {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:3000/api/comments/${commentId}`,
+        `https://review-backend-vercel.vercel.app/api/comments/${commentId}`,
         { text: updatedText },
         {
           headers: {
@@ -934,9 +934,12 @@ const AllReviews = () => {
   const deleteComment = async (commentId, reviewId) => {
     try {
       const token = sessionStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/comments/${commentId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://review-backend-vercel.vercel.app/api/comments/${commentId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setReviews((prev) =>
         prev.map((review) =>
           review._id === reviewId
@@ -960,7 +963,7 @@ const AllReviews = () => {
         return;
       }
       const res = await axios.post(
-        `http://localhost:3000/api/reviews/${reviewId}/like`,
+        `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -991,7 +994,7 @@ const AllReviews = () => {
         return;
       }
       const res = await axios.post(
-        `http://localhost:3000/api/reviews/${reviewId}/dislike`,
+        `https://review-backend-vercel.vercel.app/api/reviews/${reviewId}/dislike`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

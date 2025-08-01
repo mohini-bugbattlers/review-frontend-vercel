@@ -34,7 +34,7 @@ const Signup = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://review-backend-vercel.vercel.app/api/auth/register",
         {
           name: customerName,
           email,
@@ -231,10 +231,7 @@ const Signup = () => {
         <a className="text-primary" href="/">
           Sign in
         </a>
-
       </p>
-
-      
 
       <style>{`
         .bg-image-static {

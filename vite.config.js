@@ -13,7 +13,7 @@ export default defineConfig({
     },
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // Backend URL
+        target: "https://review-backend-vercel.vercel.app", // Backend URL
         changeOrigin: true, // Adjust the origin to match the target
         rewrite: (path) => path.replace(/^\/api/, ""), // Remove /api prefix
       },

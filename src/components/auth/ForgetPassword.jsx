@@ -20,7 +20,7 @@ const ChangePassword = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.put(
-        "http://localhost:3000/api/auth/change-password",
+        "https://review-backend-vercel.vercel.app/api/auth/change-password",
         {
           currentPassword: currentPassword.trim(),
           newPassword: newPassword.trim(),

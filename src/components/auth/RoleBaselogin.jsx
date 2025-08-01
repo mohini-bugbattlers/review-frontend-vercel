@@ -40,21 +40,21 @@ const RoleLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://review-backend-vercel.vercel.app/api/auth/login",
         {
           email,
           password,
         }
       );
       const { token } = response.data;
-      
-      const role=response.data.user.role;
+
+      const role = response.data.user.role;
       console.log(role);
 
       if (token) {
         toast.success("Customer login successful!");
         sessionStorage.setItem("token", token);
-        sessionStorage.setItem("role",role);
+        sessionStorage.setItem("role", role);
         navigate("/home");
         window.location.reload();
       } else {
@@ -74,7 +74,7 @@ const RoleLogin = () => {
     console.log("Google response:", credentialResponse); // Debug
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login/google",
+        "https://review-backend-vercel.vercel.app/api/auth/login/google",
         {
           token: credentialResponse.credential, // Use credential instead of tokenId
         }
@@ -96,7 +96,7 @@ const RoleLogin = () => {
   const responseFacebook = async (response) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login/facebook",
+        "https://review-backend-vercel.vercel.app/api/auth/login/facebook",
         {
           accessToken: response.accessToken,
           userID: response.userID,
@@ -129,7 +129,7 @@ const RoleLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/customer/send-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/send-otp",
         {
           email: loginMethod === "email" ? email : null,
           phone: loginMethod === "phone" ? phone : null,
@@ -154,7 +154,7 @@ const RoleLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/customer/verify-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/verify-otp",
         {
           otp,
           email: loginMethod === "email" ? formData.email : null,

@@ -35,7 +35,7 @@
 //     try {
 //       // Register the user first
 //       const registerResponse = await axios.post(
-//         "http://localhost:3000/api/auth/customer/signup",
+//         "https://review-backend-vercel.vercel.app/api/auth/customer/signup",
 //         {
 //           name,
 //           email,
@@ -48,7 +48,7 @@
 
 //       // Now send the OTP
 //       const otpResponse = await axios.post(
-//         "http://localhost:3000/api/auth/customer/send-otp",
+//         "https://review-backend-vercel.vercel.app/api/auth/customer/send-otp",
 //         {
 //           email: signupMethod === "email" ? email : null,
 //           phone: signupMethod === "phone" ? phone : null,
@@ -80,7 +80,7 @@
 //     try {
 //       // Send request to verify OTP
 //       const response = await axios.post(
-//         "http://localhost:3000/api/auth/customer/verify-otp",
+//         "https://review-backend-vercel.vercel.app/api/auth/customer/verify-otp",
 //         {
 //           email: signupMethod === "email" ? formData.email : null,
 //           phone: signupMethod === "phone" ? formData.phone : null,
@@ -311,8 +311,6 @@
 
 // export default CustomerSignup;
 
-
-
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "lucide-react";
@@ -369,7 +367,7 @@ const CustomerSignup = () => {
     try {
       // Register the user first
       const registerResponse = await axios.post(
-        "http://localhost:3000/api/auth/customer/signup",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/signup",
         {
           name,
           email,
@@ -380,7 +378,7 @@ const CustomerSignup = () => {
       toast.success(registerResponse.data.message);
       // Now send the OTP
       const otpResponse = await axios.post(
-        "http://localhost:3000/api/auth/customer/send-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/send-otp",
         {
           email: signupMethod === "email" ? email : null,
           phone: signupMethod === "phone" ? phone : null,
@@ -400,8 +398,13 @@ const CustomerSignup = () => {
       }
     } catch (err) {
       if (err.response) {
-        if (err.response.data.error && err.response.data.error.includes("E11000 duplicate key error")) {
-          setError("This email is already registered. Please use a different email.");
+        if (
+          err.response.data.error &&
+          err.response.data.error.includes("E11000 duplicate key error")
+        ) {
+          setError(
+            "This email is already registered. Please use a different email."
+          );
         } else if (err.response.data && err.response.data.message) {
           setError(err.response.data.message);
         } else {
@@ -427,7 +430,7 @@ const CustomerSignup = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/customer/verify-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/customer/verify-otp",
         {
           email: signupMethod === "email" ? formData.email : null,
           phone: signupMethod === "phone" ? formData.phone : null,
@@ -617,9 +620,12 @@ const CustomerSignup = () => {
               >
                 <div className="text-center mb-8">
                   <User className="w-16 h-16 mx-auto mb-4 text-blue-600" />
-                  <h2 className="text-3xl font-bold text-gray-900">Verify OTP</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    Verify OTP
+                  </h2>
                   <p className="text-gray-600 mt-2">
-                    Enter the 6-digit OTP sent to {signupMethod === "email" ? formData.email : formData.phone}
+                    Enter the 6-digit OTP sent to{" "}
+                    {signupMethod === "email" ? formData.email : formData.phone}
                   </p>
                 </div>
                 <form onSubmit={handleVerifyOTP} className="space-y-6">
@@ -676,7 +682,8 @@ const CustomerSignup = () => {
               Find Your Perfect Builder
             </h2>
             <p className="text-lg max-w-md mx-auto">
-              Create an account to connect with professional builders and start your journey
+              Create an account to connect with professional builders and start
+              your journey
             </p>
           </div>
         </div>
@@ -686,6 +693,3 @@ const CustomerSignup = () => {
 };
 
 export default CustomerSignup;
-
-
-

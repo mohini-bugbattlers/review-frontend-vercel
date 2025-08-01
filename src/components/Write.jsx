@@ -39,7 +39,7 @@ function Write() {
   const [showPopup, setShowPopup] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [constructors, setConstructors] = useState([]);
-const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   const allParameters = [
     { name: "Project Location", icon: <FaHome /> },
@@ -71,34 +71,37 @@ const [projects, setProjects] = useState([]);
     }
   };
   useEffect(() => {
-  const fetchConstructors = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/constructors");
-      setConstructors(res.data.constructors);
-    } catch (error) {
-      console.error("Error fetching constructors", error);
-    }
-  };
+    const fetchConstructors = async () => {
+      try {
+        const res = await axios.get(
+          "https://review-backend-vercel.vercel.app/api/constructors"
+        );
+        setConstructors(res.data.constructors);
+      } catch (error) {
+        console.error("Error fetching constructors", error);
+      }
+    };
 
-  fetchConstructors();
-}, []);
-useEffect(() => {
-  const fetchProjects = async () => {
-    if (!name) {
-      setProjects([]);
-      return;
-    }
-    try {
-      const res = await axios.get(`http://localhost:3000/api/projects/constructor/${name}`);
-      setProjects(res.data);
-    } catch (error) {
-      console.error("Error fetching projects", error);
-    }
-  };
+    fetchConstructors();
+  }, []);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      if (!name) {
+        setProjects([]);
+        return;
+      }
+      try {
+        const res = await axios.get(
+          `https://review-backend-vercel.vercel.app/api/projects/constructor/${name}`
+        );
+        setProjects(res.data);
+      } catch (error) {
+        console.error("Error fetching projects", error);
+      }
+    };
 
-  fetchProjects();
-}, [name]);
-
+    fetchProjects();
+  }, [name]);
 
   const handlePropertyTypeChange = (type) => {
     setPropertyType((prev) =>
@@ -114,7 +117,9 @@ useEffect(() => {
 
   const handlePropertyStatusChange = (status) => {
     setPropertyStatus((prev) =>
-      prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
+      prev.includes(status)
+        ? prev.filter((s) => s !== status)
+        : [...prev, status]
     );
   };
 
@@ -151,20 +156,25 @@ useEffect(() => {
       constructorId: name,
       projectId: projectName,
       userId: "currentUserId", // Replace with actual user ID from session or context
-      rating: Object.values(ratings).reduce((a, b) => a + b, 0) / Object.keys(ratings).length,
+      rating:
+        Object.values(ratings).reduce((a, b) => a + b, 0) /
+        Object.keys(ratings).length,
       comment: message,
       status: "pending",
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://review-backend-vercel.vercel.app/api/reviews",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         toast.success("Form submitted successfully!");
@@ -220,41 +230,42 @@ useEffect(() => {
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-12 gap-6">
             <select
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-  className="col-span-6 w-full px-6 py-2 border border-gray-300 rounded-lg shadow-sm text-lg"
->
-  <option value="">Select Builder</option>
-  {constructors.map((c) => (
-    <option key={c._id} value={c._id}>
-      {c.name}
-    </option>
-  ))}
-</select>
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-6 w-full px-6 py-2 border border-gray-300 rounded-lg shadow-sm text-lg"
+            >
+              <option value="">Select Builder</option>
+              {constructors.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
 
-          <select
-  value={projectName}
-  onChange={(e) => setProjectName(e.target.value)}
-  className="col-span-6 w-full px-6 py-2 border border-gray-300 rounded-lg shadow-sm text-lg"
-  disabled={!name}
->
-  {!name ? (
-    <option value="">Please select a builder first</option>
-  ) : projects.length === 0 ? (
-    <option value="">No projects found for selected builder. Please select another one.</option>
-  ) : (
-    <>
-      <option value="">Select Project</option>
-      {projects.map((p) => (
-        <option key={p._id} value={p._id}>
-          {p.name}
-        </option>
-      ))}
-    </>
-  )}
-</select>
-
-
+            <select
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              className="col-span-6 w-full px-6 py-2 border border-gray-300 rounded-lg shadow-sm text-lg"
+              disabled={!name}
+            >
+              {!name ? (
+                <option value="">Please select a builder first</option>
+              ) : projects.length === 0 ? (
+                <option value="">
+                  No projects found for selected builder. Please select another
+                  one.
+                </option>
+              ) : (
+                <>
+                  <option value="">Select Project</option>
+                  {projects.map((p) => (
+                    <option key={p._id} value={p._id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </>
+              )}
+            </select>
 
             <input
               type="text"
@@ -453,4 +464,3 @@ useEffect(() => {
 }
 
 export default Write;
-

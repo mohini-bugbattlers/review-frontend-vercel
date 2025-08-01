@@ -19,7 +19,7 @@ const AllConstructors = () => {
       try {
         const token = sessionStorage.getItem("token");
         const api = axios.create({
-          baseURL: "http://localhost:3000/api",
+          baseURL: "https://review-backend-vercel.vercel.app/api",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -115,7 +115,9 @@ const AllConstructors = () => {
                         <span
                           key={idx}
                           className={`${
-                            idx < constructor.rating ? "text-yellow-500" : "text-gray-300"
+                            idx < constructor.rating
+                              ? "text-yellow-500"
+                              : "text-gray-300"
                           }`}
                         >
                           ★
@@ -187,7 +189,9 @@ const AllConstructors = () => {
                           <span
                             key={idx}
                             className={`${
-                              idx < constructor.rating ? "text-yellow-500" : "text-gray-300"
+                              idx < constructor.rating
+                                ? "text-yellow-500"
+                                : "text-gray-300"
                             }`}
                           >
                             ★
@@ -206,7 +210,9 @@ const AllConstructors = () => {
                         onClick={() => handleLikeClick(constructor.id)}
                       >
                         <FaThumbsUp className="w-5 h-5" />
-                        <span className="ml-1">{likes[constructor.id] || 0}</span>
+                        <span className="ml-1">
+                          {likes[constructor.id] || 0}
+                        </span>
                       </button>
                       <button className="flex items-center hover:text-blue-600 transition-colors">
                         <span className="material-icons">comment</span>

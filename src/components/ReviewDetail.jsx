@@ -11,16 +11,19 @@ const ReviewDetail = () => {
   const [newComment, setNewComment] = useState("");
 
   const role = sessionStorage.getItem("role"); // 'customer' or 'builder'
-console.log("role",role)
+  console.log("role", role);
   useEffect(() => {
     const fetchReview = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.get(`http://localhost:3000/api/reviews/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `https://review-backend-vercel.vercel.app/api/reviews/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setReview(response.data);
       } catch (error) {
         console.error("Error fetching review details:", error);
@@ -82,7 +85,9 @@ console.log("role",role)
 
         <div className="space-y-4">
           <img
-            src={review.constructorId?.image || "https://via.placeholder.com/400"}
+            src={
+              review.constructorId?.image || "https://via.placeholder.com/400"
+            }
             alt="project"
             className="rounded-lg w-full max-w-xs mx-auto sm:max-w-sm object-cover"
           />
@@ -116,7 +121,9 @@ console.log("role",role)
                   />
                 </svg>
               ))}
-              <span className="ml-2 text-sm text-gray-600">{review.rating}/5</span>
+              <span className="ml-2 text-sm text-gray-600">
+                {review.rating}/5
+              </span>
             </div>
           </div>
 
@@ -126,53 +133,56 @@ console.log("role",role)
               <div
                 key={comment.id}
                 className={`p-3 rounded-lg text-sm sm:text-base ${
-                  comment.isBuilder ? "bg-blue-100 text-blue-800" : "bg-gray-100 text-gray-800"
+                  comment.isBuilder
+                    ? "bg-blue-100 text-blue-800"
+                    : "bg-gray-100 text-gray-800"
                 }`}
               >
                 <p>
-                  <strong>{comment.isBuilder ? "Builder" : "customer"}:</strong> {comment.text}
+                  <strong>{comment.isBuilder ? "Builder" : "customer"}:</strong>{" "}
+                  {comment.text}
                 </p>
               </div>
             ))}
 
             <div className="space-y-2">
               <textarea
-  value={newComment}
-  onChange={(e) => setNewComment(e.target.value)}
-  rows="4"
-  placeholder={
-    role === "builder"
-      ? "Write a reply as builder..."
-      : role === "customer"
-      ? "Write a comment as customer..."
-      : "Login to comment"
-  }
-  className={`w-full p-3 rounded-lg border ${
-    (role === "customer" || role === "builder")
-      ? "border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      : "border-red-400 bg-red-50 cursor-not-allowed"
-  } text-sm`}
-  disabled={role !== "customer" && role !== "builder"}
-/>
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                rows="4"
+                placeholder={
+                  role === "builder"
+                    ? "Write a reply as builder..."
+                    : role === "customer"
+                    ? "Write a comment as customer..."
+                    : "Login to comment"
+                }
+                className={`w-full p-3 rounded-lg border ${
+                  role === "customer" || role === "builder"
+                    ? "border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    : "border-red-400 bg-red-50 cursor-not-allowed"
+                } text-sm`}
+                disabled={role !== "customer" && role !== "builder"}
+              />
 
-{/* // Conditional button rendering */}
-{role === "customer" && (
-  <button
-    onClick={() => handleAddComment(false)}
-    className="px-6 py-2 text-sm bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-  >
-    Add Comment
-  </button>
-)}
+              {/* // Conditional button rendering */}
+              {role === "customer" && (
+                <button
+                  onClick={() => handleAddComment(false)}
+                  className="px-6 py-2 text-sm bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+                >
+                  Add Comment
+                </button>
+              )}
 
-{role === "builder" && (
-  <button
-    onClick={() => handleAddComment(true)}
-    className="px-6 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-  >
-    Add Builder Reply
-  </button>
-)}
+              {role === "builder" && (
+                <button
+                  onClick={() => handleAddComment(true)}
+                  className="px-6 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Add Builder Reply
+                </button>
+              )}
             </div>
           </div>
         </div>

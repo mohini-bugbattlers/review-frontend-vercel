@@ -45,7 +45,7 @@
 //     }
 //     try {
 //       const registerResponse = await axios.post(
-//         "http://localhost:3000/api/auth/builder/signup",
+//         "https://review-backend-vercel.vercel.app/api/auth/builder/signup",
 //         {
 //           name,
 //           email,
@@ -56,7 +56,7 @@
 //       );
 //       toast.success(registerResponse.data.message);
 //       const otpResponse = await axios.post(
-//         "http://localhost:3000/api/auth/builder/send-otp",
+//         "https://review-backend-vercel.vercel.app/api/auth/builder/send-otp",
 //         {
 //           email,
 //           role: "builder",
@@ -98,7 +98,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         "http://localhost:3000/api/auth/builder/verify-otp",
+//         "https://review-backend-vercel.vercel.app/api/auth/builder/verify-otp",
 //         {
 //           email: formData.email,
 //           otp: formData.otp,
@@ -342,7 +342,7 @@ const BuilderSignup = () => {
     try {
       // First, register the user
       const registerResponse = await axios.post(
-        "http://localhost:3000/api/auth/builder/signup",
+        "https://review-backend-vercel.vercel.app/api/auth/builder/signup",
         {
           name,
           email,
@@ -356,7 +356,7 @@ const BuilderSignup = () => {
 
       // Then, send the OTP
       const otpResponse = await axios.post(
-        "http://localhost:3000/api/auth/builder/send-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/builder/send-otp",
         {
           email,
           role: "builder",
@@ -379,7 +379,9 @@ const BuilderSignup = () => {
       if (err.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        toast.error(err.response.data.message || "An error occurred. Please try again.");
+        toast.error(
+          err.response.data.message || "An error occurred. Please try again."
+        );
       } else if (err.request) {
         // The request was made but no response was received
         toast.error("No response received from the server. Please try again.");
@@ -410,7 +412,7 @@ const BuilderSignup = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/builder/verify-otp",
+        "https://review-backend-vercel.vercel.app/api/auth/builder/verify-otp",
         {
           email: formData.email,
           otp: formData.otp,
