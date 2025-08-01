@@ -16,11 +16,17 @@ const BeforeLogin = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
 
-    const storedCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+    const storedCredentials = JSON.parse(
+      localStorage.getItem("userCredentials")
+    );
 
     if (storedCredentials) {
-      if ((storedCredentials.email && storedCredentials.email === email && storedCredentials.password === password) ||
-          (storedCredentials.phone && storedCredentials.phone === email)) {
+      if (
+        (storedCredentials.email &&
+          storedCredentials.email === email &&
+          storedCredentials.password === password) ||
+        (storedCredentials.phone && storedCredentials.phone === email)
+      ) {
         alert("Sign-in successful!");
         navigate("/home");
       } else {
@@ -62,7 +68,7 @@ const BeforeLogin = () => {
               />
               Sign in with Google
             </button>
-            <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
+            {/* <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
                 alt="Facebook"
@@ -70,7 +76,7 @@ const BeforeLogin = () => {
                 style={{ width: "20px" }}
               />
               Sign in with Facebook
-            </button>
+            </button> */}
             <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
@@ -106,10 +112,7 @@ const BeforeLogin = () => {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </span>
               </div>
-              <button
-                type="submit"
-                className="btn btn-dark w-100 mb-2"
-              >
+              <button type="submit" className="btn btn-dark w-100 mb-2">
                 Sign In
               </button>
             </form>

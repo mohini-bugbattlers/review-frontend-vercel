@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin } from "@react-oauth/google"; // Updated library
-import FacebookLogin from "react-facebook-login";
+
 import img1 from "../../Assets/Images/BannerImg/img1.jpg";
 import img2 from "../../Assets/Images/BannerImg/img2.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -90,29 +90,6 @@ const RoleLogin = () => {
     } catch (err) {
       setError("Google login failed. Please try again later.");
       console.error("Google login error:", err);
-    }
-  };
-
-  const responseFacebook = async (response) => {
-    try {
-      const res = await axios.post(
-        "https://review-backend-vercel.vercel.app/api/auth/login/facebook",
-        {
-          accessToken: response.accessToken,
-          userID: response.userID,
-        }
-      );
-      const { token } = res.data;
-      if (token) {
-        toast.success("Facebook login successful!");
-        sessionStorage.setItem("token", token);
-        navigate("/home");
-      } else {
-        setError("Facebook login failed. No token received.");
-      }
-    } catch (err) {
-      setError("Facebook login failed. Please try again later.");
-      console.error("Facebook login error:", err);
     }
   };
 

@@ -15,7 +15,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");

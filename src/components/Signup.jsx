@@ -87,7 +87,7 @@ const Signup = () => {
               Continue with Google
             </button>
 
-            <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
+            {/* <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
                 alt="Facebook"
@@ -95,7 +95,7 @@ const Signup = () => {
                 style={{ width: "20px" }}
               />
               Continue with Facebook
-            </button>
+            </button> */}
 
             <button className="btn btn-light w-100 mb-2 d-flex align-items-center justify-content-center border">
               <img
